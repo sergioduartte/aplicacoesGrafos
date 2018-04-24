@@ -1,2 +1,2 @@
 # aplicacoesGrafos
-Aplicações de Teoria dos Grafos - 2018.1
+Repositório criado para a disciplina de Aplicações de Teoria dos Grafos - 2018.1
