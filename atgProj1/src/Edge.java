@@ -12,7 +12,6 @@ public class Edge {
     }
 
     public Edge (int v1, int v2) {
-        this(v1, v2, DEFAULT_WEIGHT);
+        this(v1,v2, DEFAULT_WEIGHT);
     }
-
 }
