@@ -14,4 +14,16 @@ public class Edge {
     public Edge (int v1, int v2) {
         this(v1,v2, DEFAULT_WEIGHT);
     }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (o == null) 
+    		return false;
+        
+    	Edge edge = (Edge) o;
+        if (this.v1 != edge.v1 || this.v2 != edge.v2 || this.weight != edge.weight)
+        	return false;
+    	
+    	return true;
+    }
 }
