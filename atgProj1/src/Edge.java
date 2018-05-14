@@ -14,7 +14,19 @@ public class Edge {
     public Edge (int v1, int v2) {
         this(v1,v2, DEFAULT_WEIGHT);
     }
-    
+
+    public int getV1() {
+        return v1;
+    }
+
+    public int getV2() {
+        return v2;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
     @Override
     public boolean equals(Object o) {
     	if (o == null) 

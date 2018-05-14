@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Graph {
 
@@ -59,8 +58,8 @@ public class Graph {
         double weight= Double.parseDouble(line[2]);
         getOrCreate(in, out); //Create vertex if not exists.
         
-        Edge edgeOut = new Edge(out,in, weight);
-        Edge edgeIn = new Edge(in,out, weight);
+        Edge edgeOut = new Edge(out, in, weight);
+        Edge edgeIn = new Edge(in, out, weight);
         
         this.graph.get(out).add(edgeOut);
         this.graph.get(in).add(edgeIn);
@@ -80,17 +79,65 @@ public class Graph {
     	return this.graph.get(vertex);
     }
 
-	/**
-     * The number of vertices
-     * @return The number of the vertices
+    /**
+     * Check if graph is connected;
+     * @return True if is connected, false otherwise.
      */
-    public int getSizeVertex() {
+    public boolean connected() {
+        final boolean[] connected = new boolean[1];
+        connected[0] = true;
+        graph.forEach((key, value) -> connected[0] = connected[0] && !(value.size() == 0) );
+        return connected[0];
+    }
+
+	/**
+     * The number of vertex
+     * @return The number of vertex
+     */
+    public int getVertexNumber() {
         return this.graph.size();
     }
 
-    public int getSizeEdge() {
+    /**
+     * The number of edges
+     * @return The number of edges
+     */
+    public int getEdgeNumber() {
+        return getDoubledEdgeCount()/2;
+    }
+
+    /**
+     * The graph's average degree.
+     * @return Graph's average degree.
+     */
+    public double getMeanEdge() {
+        return getDoubledEdgeCount()/getVertexNumber();
+    }
+
+    private int getDoubledEdgeCount() {
+        final int[] counter = {0};
+        graph.forEach((key, value) -> counter[0] += value.size());
+        return counter[0];
+    }
+
+    protected String ALrepresentation() {
+        String result = "";
+        for (int key : graph.keySet()) {
+            result += key + " - ";
+            ArrayList<Integer> edges = new ArrayList<>();
+            for (Edge edge : graph.get(key)) {
+                edges.add(edge.getV2());
+            }
+            Collections.sort(edges);
+            result += edges.toString().replaceAll("\\[", "").replaceAll("]", "");
+            result += System.getProperty("line.separator");
+        }
+        return result.trim();
+    }
+
+    protected String AMrepresentation() {
         //TODO
-        return 0;
+        return "";
     }
 
     public String shortestPath(int v1, int v2) {

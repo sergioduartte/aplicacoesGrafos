@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +10,10 @@ public class Controller {
 
 
     private Graph graph;
+
+    public Controller() {
+
+    }
 
     /**
      * Read and generate a graph with weighted edges, based on text file
@@ -28,7 +31,7 @@ public class Controller {
         //a primeira linha informa o número
         // de vértices do grafo. Cada linha subsequente informa as arestas do mesmo.
 
-        for (int i = 1; i < qLines; i++) {
+        for (int i = 1; i <= qLines; i++) {
             graph.connectSimpleVertex(lines.get(i));
         }
     }
@@ -46,11 +49,15 @@ public class Controller {
         int qLines = Integer.parseInt(lines.get(0));
         graph = new Graph();
 
-        for (int i = 1; i < qLines; i++) {
+        for (int i = 1; i <= qLines; i++) {
             graph.connectWeightedVertex(lines.get(i));
         }
     }
 
+    public Graph getGraph() {
+
+        return graph;
+    }
 
     public int getVertexNumber (Graph graph) {
 
@@ -62,12 +69,29 @@ public class Controller {
         return graph.getEdgeNumber();
     }
 
-    public float getMeanEdge (Graph graph) {
-        return 0;
+    public double getMeanEdge (Graph graph) {
+
+        return graph.getMeanEdge();
     }
 
-    public String graphRepresentation (Graph graph, String type) {
-        return "";
+    public boolean connected(Graph graph) {
+
+        return graph.connected();
+    }
+
+    /**
+     * String representation of the graph based on type given.
+     * @param graph The graph to be represented in a String.
+     * @param type The type of representation.
+     * @return String of the representation.
+     * @throws Exception If type is invalid.
+     */
+    public String graphRepresentation (Graph graph, String type) throws Exception {
+        if (type.equals("AL")) {
+            return graph.ALrepresentation();
+        } else if (type.equals("AM")) {
+            return graph.AMrepresentation();
+        } else throw new Exception("Invalid representation.");
     }
 
     public String BFS (Graph graph, int v) {
