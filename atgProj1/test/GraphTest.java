@@ -8,7 +8,7 @@ public class GraphTest {
 	
 	@Test
     public void createVertex () {
-		Graph graph = new Graph();
+		Graph graph = new Graph(2);
 		try {
 			graph.createVertex(1);
 			graph.createVertex(1);
@@ -20,7 +20,7 @@ public class GraphTest {
 	
     @Test
     public void connectSimpleVertex1 () {
-    	Graph graph = new Graph();
+    	Graph graph = new Graph(2);
     	try {
     		String vertices = "a b c";
     		graph.connectSimpleVertex(vertices);
@@ -32,7 +32,7 @@ public class GraphTest {
     
     @Test
     public void connectSimpleVertex2 () {
-    	Graph graph = new Graph();
+    	Graph graph = new Graph(2);
     	try {
     		String vertices = "1 2 3 4";
     		graph.connectSimpleVertex(vertices);
@@ -44,7 +44,7 @@ public class GraphTest {
     
     @Test
     public void connectSimpleVertex3 () {
-    	Graph graph = new Graph();
+    	Graph graph = new Graph(2);
     	try {
     		String vertices = "";
     		graph.connectSimpleVertex(vertices);
@@ -56,7 +56,7 @@ public class GraphTest {
     
     @Test
     public void connectSimpleVertex4 () {
-    	Graph graph = new Graph();
+    	Graph graph = new Graph(2);
     	Edge edgeOut = new Edge(1,2);
         Edge edgeIn = new Edge(2,1);
     	try {

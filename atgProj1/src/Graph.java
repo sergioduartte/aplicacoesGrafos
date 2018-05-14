@@ -3,17 +3,22 @@ import java.util.*;
 public class Graph {
 
     private HashMap<Integer, HashSet<Edge>> graph;
+    private final int qtVertices;
 
-    public Graph () {
+    public Graph (int vertices) {
         this.graph = new HashMap<>();
+        qtVertices = vertices;
     }
     
     public void createVertex(Integer vertex) throws Exception {
     	if( graph.containsKey(vertex) )
     		throw new Exception("Vertex already exists.");
-    	
+    	if( this.qtVertices == graph.size()) {
+    	    throw new Exception("Vertex cannot be created. All the vertices already created");
+        }
     	HashSet<Edge> edges = new HashSet<>();
         graph.put(vertex, edges);
+
     }
 
 

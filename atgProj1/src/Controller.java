@@ -25,13 +25,12 @@ public class Controller {
 
         ArrayList<String> lines = FReader.readFile(path);
 
-        int qLines = Integer.parseInt(lines.get(0));
-        graph = new Graph();
+        int qVertices = Integer.parseInt(lines.get(0));
 
         //a primeira linha informa o número
         // de vértices do grafo. Cada linha subsequente informa as arestas do mesmo.
-
-        for (int i = 1; i <= qLines; i++) {
+        graph = new Graph(qVertices);
+        for (int i = 1; i <= qVertices; i++) {
             graph.connectSimpleVertex(lines.get(i));
         }
     }
@@ -46,10 +45,10 @@ public class Controller {
 
         ArrayList<String> lines = FReader.readFile(path);
 
-        int qLines = Integer.parseInt(lines.get(0));
-        graph = new Graph();
+        int qVertices = Integer.parseInt(lines.get(0));
 
-        for (int i = 1; i <= qLines; i++) {
+        graph = new Graph(qVertices);
+        for (int i = 1; i <= qVertices; i++) {
             graph.connectWeightedVertex(lines.get(i));
         }
     }
