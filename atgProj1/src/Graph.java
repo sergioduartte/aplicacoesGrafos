@@ -4,9 +4,11 @@ public class Graph {
 
     private HashMap<Integer, HashSet<Edge>> graph;
     private final int qtVertices;
+    private HashMap<Integer, Boolean> visited;
 
     public Graph (int vertices) {
         this.graph = new HashMap<>();
+        this.visited = new HashMap<>();
         qtVertices = vertices;
     }
 
@@ -48,10 +50,6 @@ public class Graph {
             this.graph.get(in).add(edgeIn);
 
         }
-
-        Edge edgeOut = new Edge(out,in);
-        this.graph.get(out).add(edgeOut);
-
     }
 
     /**
@@ -178,6 +176,14 @@ public class Graph {
     protected String AMrepresentation() {
         //TODO
         return "";
+    }
+
+    public void setVertexStatus(Integer v){
+        this.visited.put(v, true);
+    }
+
+    public boolean getVertexStatus(Integer v){
+        return this.visited.containsKey(v) && this.visited.get(v);
     }
 
     public String shortestPath(int v1, int v2) {

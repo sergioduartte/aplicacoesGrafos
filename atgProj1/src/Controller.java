@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author sergiosd
@@ -10,9 +14,12 @@ public class Controller {
 
 
     private Graph graph;
+    private String resultDsf;
+    private int vertexLevel;
 
     public Controller() {
-
+        this.resultDsf = "";
+        this.vertexLevel = 0;
     }
 
     /**
@@ -98,8 +105,26 @@ public class Controller {
         return "";
     }
 
-    public String DFS (Graph graph, int v) {
-        return "";
+    public String DFS (Graph graph, int v) throws Exception {
+        HashSet<Edge> edges = graph.getEdges(v);
+
+        this.resultDsf = "";
+
+        if(!graph.getVertexStatus(v)) this.resultDsf = this.resultDsf + v + " - " + this.vertexLevel + " - " + System.getProperty("line.separator");
+
+        graph.setVertexStatus(v);
+
+        this.vertexLevel += 1;
+
+        for (Edge e : edges) {
+
+            if(!graph.getVertexStatus(e.getV2())){
+                graph.setVertexStatus(e.getV2());
+                this.resultDsf = this.resultDsf + e.getV2() + " - " + this.vertexLevel + " " + v + System.getProperty("line.separator") + DFS(graph, e.getV2());
+            }
+        }
+
+        return this.resultDsf;
     }
 
     public String SCC (Graph graph) {
