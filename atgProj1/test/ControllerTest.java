@@ -95,12 +95,26 @@ public class ControllerTest {
         } catch (Exception e) {
             Assert.fail();
         }
-        String expected = "1 - 2, 5" + System.getProperty("line.separator") +
-                "2 - 1, 5" + System.getProperty("line.separator") +
+
+        //"5", "2 2", "2 5", "5 3", "4 5", "1 5"
+        String expected = "1 - 5" + System.getProperty("line.separator") +
+                "2 - 2 5" + System.getProperty("line.separator") +
                 "3 - 5" + System.getProperty("line.separator") +
                 "4 - 5" + System.getProperty("line.separator") +
-                "5 - 1, 2, 3, 4";
+                "5 - 1 2 3 4";
+
+        //"5", "2 2", "2 5", "5 3", "4 5", "1 5"
+        String expectedAM =
+                "    1   2   3   4   5" + System.getProperty("line.separator") +
+                "1   0   0   0   0   1" + System.getProperty("line.separator") +
+                "2   0   1   0   0   1" + System.getProperty("line.separator") +
+                "3   0   0   0   0   1" + System.getProperty("line.separator") +
+                "4   0   0   0   0   1" + System.getProperty("line.separator") +
+                "5   1   1   1   1   0" + System.getProperty("line.separator");
+
+
         try {
+            Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
             Assert.fail();

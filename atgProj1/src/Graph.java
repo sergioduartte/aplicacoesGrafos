@@ -48,6 +48,7 @@ public class Graph {
 
             this.graph.get(out).add(edgeOut);
             this.graph.get(in).add(edgeIn);
+            return;
 
         }
     }
@@ -76,6 +77,7 @@ public class Graph {
 
             this.graph.get(out).add(edgeOut);
             this.graph.get(in).add(edgeIn);
+            return;
 
         }
 
@@ -94,6 +96,7 @@ public class Graph {
             if (!this.graph.containsKey(in)) {
                 createVertex(in);
             }
+            return;
         }
 
         if (!this.graph.containsKey(out)) {
@@ -159,23 +162,82 @@ public class Graph {
 
 
     protected String ALrepresentation() {
+
         String result = "";
-        for (int key : graph.keySet()) {
-            result += key + " - ";
-            ArrayList<Integer> edges = new ArrayList<>();
-            for (Edge edge : graph.get(key)) {
-                edges.add(edge.getV2());
+
+        int[] vertices = getVerticesAsOrderedArray();
+
+        ArrayList<Integer> edges;
+        for (int vertex : vertices) {
+            result += vertex + " - ";
+            edges = new ArrayList<>();
+            for (Edge edge : graph.get(vertex)) {
+                if (!edges.contains(edge)){
+                    edges.add(edge.getV2());
+                }
             }
             Collections.sort(edges);
-            result += edges.toString().replaceAll("\\[", "").replaceAll("]", "");
+
+            for (int i = 0; i < edges.size(); i++) {
+                result += edges.get(i) + " ";
+            }
+
+            result = result.trim();
+
             result += System.getProperty("line.separator");
         }
         return result.trim();
     }
 
     protected String AMrepresentation() {
-        //TODO
-        return "";
+        int[][] matrix = new int[this.getVertexNumber()][this.getVertexNumber()];
+
+        int[] lines = getVerticesAsOrderedArray();
+        int[] columns = getVerticesAsOrderedArray();
+
+        String li = " ";
+
+        for (int k = 0; k < lines.length; k++) {
+            li += "   " + lines[k];
+        }
+
+        String output = li + System.getProperty("line.separator");
+
+        for (int line = 0; line < lines.length; line++) {
+            for (int col = 0; col < lines.length; col++) {
+                for (Edge edge : graph.get(lines[line])) {
+                    if (edge.isConnected(lines[col])) {
+                        matrix[line][col]++;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < lines.length; i++) {
+            output += lines[i];
+            for (int j = 0; j < matrix[i].length ; j++) {
+                output += "   " + matrix[i][j];
+            }
+            output += System.getProperty("line.separator");
+        }
+
+
+        return output;
+    }
+
+    private int[] getVerticesAsOrderedArray() {
+        ArrayList<Integer> vertices = new ArrayList<>();
+
+        for (Integer v: graph.keySet()) {
+            vertices.add(v);
+        }
+        Collections.sort(vertices);
+
+        int[] output = new int[vertices.size()];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = vertices.get(i);
+        }
+        return output;
     }
 
     public void setVertexStatus(Integer v){
