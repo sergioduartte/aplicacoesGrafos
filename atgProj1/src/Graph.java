@@ -9,11 +9,11 @@ public class Graph {
         this.graph = new HashMap<>();
         qtVertices = vertices;
     }
-    
+
     public void createVertex(Integer vertex) throws Exception {
     	if( graph.containsKey(vertex) )
     		throw new Exception("Vertex already exists.");
-    	if( this.qtVertices == graph.size()) {
+    	if( this.qtVertices == graph.size() ) {
     	    throw new Exception("Vertex cannot be created. All the vertices already created");
         }
     	HashSet<Edge> edges = new HashSet<>();
@@ -36,13 +36,21 @@ public class Graph {
 
         int out = Integer.parseInt(line[0]);
         int in = Integer.parseInt(line[1]);
+
         getOrCreate(in, out); //Create vertex if not exists.
-        
+
+        if (in != out) {
+
+            Edge edgeOut = new Edge(out,in);
+            Edge edgeIn = new Edge(in,out);
+
+            this.graph.get(out).add(edgeOut);
+            this.graph.get(in).add(edgeIn);
+
+        }
+
         Edge edgeOut = new Edge(out,in);
-        Edge edgeIn = new Edge(in,out);
-        
         this.graph.get(out).add(edgeOut);
-        this.graph.get(in).add(edgeIn);
 
     }
 
@@ -54,28 +62,45 @@ public class Graph {
      * @throws Exception if the commands are wrong, with the cause.
      */
     public void connectWeightedVertex(String vertices) throws Exception {
-        String[] line = vertices.split(" ");
 
         Validator.validateCommands(vertices);
+        String[] line = vertices.split(" ");
 
         int out = Integer.parseInt(line[0]);
         int in = Integer.parseInt(line[1]);
         double weight= Double.parseDouble(line[2]);
         getOrCreate(in, out); //Create vertex if not exists.
-        
+
+
+        if (in != out) {
+            Edge edgeOut = new Edge(out, in, weight);
+            Edge edgeIn = new Edge(in, out, weight);
+
+            this.graph.get(out).add(edgeOut);
+            this.graph.get(in).add(edgeIn);
+
+        }
+
         Edge edgeOut = new Edge(out, in, weight);
-        Edge edgeIn = new Edge(in, out, weight);
-        
         this.graph.get(out).add(edgeOut);
-        this.graph.get(in).add(edgeIn);
 
     }
 
     private void getOrCreate(int in, int out) throws Exception {
-    	 if (!this.graph.containsKey(out))
-         	createVertex(out);
-         if (!this.graph.containsKey(in))
-             createVertex(in);
+
+        if (in != out) {
+
+            if (!this.graph.containsKey(out)) {
+                createVertex(out);
+            }
+            if (!this.graph.containsKey(in)) {
+                createVertex(in);
+            }
+        }
+
+        if (!this.graph.containsKey(out)) {
+            createVertex(out);
+        }
 	}
     
     public HashSet getEdges(int vertex) throws Exception {
@@ -108,7 +133,22 @@ public class Graph {
      * @return The number of edges
      */
     public int getEdgeNumber() {
-        return getDoubledEdgeCount()/2;
+        return countEdges();
+        // return getDoubledEdgeCount()/2;
+    }
+
+    private int countEdges() {
+        ArrayList<Edge> aux = new ArrayList<>();
+        for (HashSet<Edge> edges : graph.values()) {
+            for (Edge edge: edges) {
+                if (!aux.contains(edge)){
+                    aux.add(edge);
+                }
+            }
+            
+        }
+
+        return aux.size();
     }
 
     /**
@@ -116,14 +156,9 @@ public class Graph {
      * @return Graph's average degree.
      */
     public double getMeanEdge() {
-        return getDoubledEdgeCount()/getVertexNumber();
+        return 2 * this.countEdges()/ this.getVertexNumber();
     }
 
-    private int getDoubledEdgeCount() {
-        final int[] counter = {0};
-        graph.forEach((key, value) -> counter[0] += value.size());
-        return counter[0];
-    }
 
     protected String ALrepresentation() {
         String result = "";

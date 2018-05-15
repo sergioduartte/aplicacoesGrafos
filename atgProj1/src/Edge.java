@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Edge {
 
     private int v1;
@@ -27,15 +29,21 @@ public class Edge {
         return weight;
     }
 
+
     @Override
     public boolean equals(Object o) {
-    	if (o == null) 
-    		return false;
-        
+    	if (o == null || !(o instanceof Edge)) {
+            return false;
+        }
+
     	Edge edge = (Edge) o;
-        if (this.v1 != edge.v1 || this.v2 != edge.v2 || this.weight != edge.weight)
-        	return false;
-    	
-    	return true;
+
+        if (edge.getV1() == this.getV1() && edge.getV2() == this.getV2() ||
+                edge.getV1() == this.getV2() && edge.getV2() == this.getV1()) {
+
+            return true;
+        }
+
+        return false;
     }
 }

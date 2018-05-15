@@ -18,7 +18,7 @@ public class ControllerTest {
 
     @Before
     public void prepareSimpleGraphFile() {
-        List<String> lines = Arrays.asList("5", "1 2", "2 5", "5 3", "4 5", "1 5");
+        List<String> lines = Arrays.asList("5", "2 2", "2 5", "5 3", "4 5", "1 5");
         Path file = Paths.get(path1);
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
@@ -48,7 +48,7 @@ public class ControllerTest {
         try {
             controller.readGraph(path1);
         } catch (Exception e) {
-            Assert.fail();
+            e.printStackTrace();
         }
     }
 

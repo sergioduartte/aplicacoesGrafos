@@ -30,6 +30,7 @@ public class Controller {
         //a primeira linha informa o número
         // de vértices do grafo. Cada linha subsequente informa as arestas do mesmo.
         graph = new Graph(qVertices);
+
         for (int i = 1; i <= qVertices; i++) {
             graph.connectSimpleVertex(lines.get(i));
         }
@@ -86,9 +87,9 @@ public class Controller {
      * @throws Exception If type is invalid.
      */
     public String graphRepresentation (Graph graph, String type) throws Exception {
-        if (type.equals("AL")) {
+        if (type.toUpperCase().equals("AL")) {
             return graph.ALrepresentation();
-        } else if (type.equals("AM")) {
+        } else if (type.toUpperCase().equals("AM")) {
             return graph.AMrepresentation();
         } else throw new Exception("Invalid representation.");
     }
