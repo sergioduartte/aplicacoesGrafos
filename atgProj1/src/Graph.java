@@ -46,6 +46,7 @@ public class Graph {
 
             this.graph.get(out).add(edgeOut);
             this.graph.get(in).add(edgeIn);
+            return;
 
         }
 
@@ -78,6 +79,7 @@ public class Graph {
 
             this.graph.get(out).add(edgeOut);
             this.graph.get(in).add(edgeIn);
+            return;
 
         }
 
@@ -96,6 +98,7 @@ public class Graph {
             if (!this.graph.containsKey(in)) {
                 createVertex(in);
             }
+            return;
         }
 
         if (!this.graph.containsKey(out)) {
@@ -161,15 +164,34 @@ public class Graph {
 
 
     protected String ALrepresentation() {
+
         String result = "";
-        for (int key : graph.keySet()) {
-            result += key + " - ";
-            ArrayList<Integer> edges = new ArrayList<>();
-            for (Edge edge : graph.get(key)) {
-                edges.add(edge.getV2());
+
+        ArrayList<Integer> vertices = new ArrayList<>();
+
+        for (Integer v: graph.keySet()) {
+            vertices.add(v);
+        }
+
+        Collections.sort(vertices);
+
+        ArrayList<Integer> edges;
+        for (int vertex : vertices) {
+            result += vertex + " - ";
+            edges = new ArrayList<>();
+            for (Edge edge : graph.get(vertex)) {
+                if (!edges.contains(edge)){
+                    edges.add(edge.getV2());
+                }
             }
             Collections.sort(edges);
-            result += edges.toString().replaceAll("\\[", "").replaceAll("]", "");
+
+            for (int i = 0; i < edges.size(); i++) {
+                result += edges.get(i) + " ";
+            }
+
+            result = result.trim();
+
             result += System.getProperty("line.separator");
         }
         return result.trim();

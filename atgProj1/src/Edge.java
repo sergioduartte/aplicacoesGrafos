@@ -1,6 +1,5 @@
-import java.util.Objects;
 
-public class Edge {
+public class Edge implements Comparable<Edge> {
 
     private int v1;
     private int v2;
@@ -30,6 +29,7 @@ public class Edge {
     }
 
 
+
     @Override
     public boolean equals(Object o) {
     	if (o == null || !(o instanceof Edge)) {
@@ -45,5 +45,15 @@ public class Edge {
         }
 
         return false;
+    }
+
+    @Override
+    public int compareTo(Edge edge) {
+        if (this.v1 < edge.getV1()) {
+            return -1;
+        } else if (this.v1 > edge.getV1()) {
+            return 1;
+        }
+        return 0;
     }
 }
