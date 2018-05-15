@@ -38,8 +38,8 @@ public class Edge implements Comparable<Edge> {
 
     	Edge edge = (Edge) o;
 
-        if (edge.getV1() == this.getV1() && edge.getV2() == this.getV2() ||
-                edge.getV1() == this.getV2() && edge.getV2() == this.getV1()) {
+        if ((edge.getV1() == this.getV1() && edge.getV2() == this.getV2()) ||
+                (edge.getV1() == this.getV2() && edge.getV2() == this.getV1())) {
 
             return true;
         }
