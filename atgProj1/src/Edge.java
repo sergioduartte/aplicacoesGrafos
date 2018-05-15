@@ -56,4 +56,8 @@ public class Edge implements Comparable<Edge> {
         }
         return 0;
     }
+
+    public boolean isConnected(int vertex) {
+        return vertex == v2;
+    }
 }

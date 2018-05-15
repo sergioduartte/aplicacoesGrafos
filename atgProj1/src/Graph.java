@@ -167,13 +167,7 @@ public class Graph {
 
         String result = "";
 
-        ArrayList<Integer> vertices = new ArrayList<>();
-
-        for (Integer v: graph.keySet()) {
-            vertices.add(v);
-        }
-
-        Collections.sort(vertices);
+        int[] vertices = getVerticesAsOrderedArray();
 
         ArrayList<Integer> edges;
         for (int vertex : vertices) {
@@ -198,8 +192,54 @@ public class Graph {
     }
 
     protected String AMrepresentation() {
-        //TODO
-        return "";
+        int[][] matrix = new int[this.getVertexNumber()][this.getVertexNumber()];
+
+        int[] lines = getVerticesAsOrderedArray();
+        int[] columns = getVerticesAsOrderedArray();
+
+        String li = " ";
+
+        for (int k = 0; k < lines.length; k++) {
+            li += "   " + lines[k];
+        }
+
+        String output = li + System.getProperty("line.separator");
+
+        for (int line = 0; line < lines.length; line++) {
+            for (int col = 0; col < lines.length; col++) {
+                for (Edge edge : graph.get(lines[line])) {
+                    if (edge.isConnected(lines[col])) {
+                        matrix[line][col]++;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < lines.length; i++) {
+            output += lines[i];
+            for (int j = 0; j < matrix[i].length ; j++) {
+                output += "   " + matrix[i][j];
+            }
+            output += System.getProperty("line.separator");
+        }
+
+
+        return output;
+    }
+
+    private int[] getVerticesAsOrderedArray() {
+        ArrayList<Integer> vertices = new ArrayList<>();
+
+        for (Integer v: graph.keySet()) {
+            vertices.add(v);
+        }
+        Collections.sort(vertices);
+
+        int[] output = new int[vertices.size()];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = vertices.get(i);
+        }
+        return output;
     }
 
     public String shortestPath(int v1, int v2) {
