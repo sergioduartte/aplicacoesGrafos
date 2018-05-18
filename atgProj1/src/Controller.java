@@ -106,25 +106,7 @@ public class Controller {
     }
 
     public String DFS (Graph graph, int v) throws Exception {
-        HashSet<Edge> edges = graph.getEdges(v);
-
-        this.resultDsf = "";
-
-        if(!graph.getVertexStatus(v)) this.resultDsf = this.resultDsf + v + " - " + this.vertexLevel + " - " + System.getProperty("line.separator");
-
-        graph.setVertexStatus(v);
-
-        this.vertexLevel += 1;
-
-        for (Edge e : edges) {
-
-            if(!graph.getVertexStatus(e.getV2())){
-                graph.setVertexStatus(e.getV2());
-                this.resultDsf = this.resultDsf + e.getV2() + " - " + this.vertexLevel + " " + v + System.getProperty("line.separator") + DFS(graph, e.getV2());
-            }
-        }
-
-        return this.resultDsf;
+        return "";
     }
 
     public String SCC (Graph graph) {

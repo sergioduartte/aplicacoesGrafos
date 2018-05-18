@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Graph {
 
-    private HashMap<Integer, HashSet<Edge>> graph;
+    private HashMap<String, HashSet<Edge>> graph;
     private final int qtVertices;
     private HashMap<Integer, Boolean> visited;
 
@@ -12,7 +12,7 @@ public class Graph {
         qtVertices = vertices;
     }
 
-    public void createVertex(Integer vertex) throws Exception {
+    public void createVertex(String vertex) throws Exception {
     	if( graph.containsKey(vertex) )
     		throw new Exception("Vertex already exists.");
     	if( this.qtVertices == graph.size() ) {
@@ -36,8 +36,8 @@ public class Graph {
 
         String[] line = vertices.split(" ");
 
-        int out = Integer.parseInt(line[0]);
-        int in = Integer.parseInt(line[1]);
+        String out = line[0];
+        String in = line[1];
 
         getOrCreate(in, out); //Create vertex if not exists.
 
@@ -65,8 +65,8 @@ public class Graph {
         Validator.validateCommands(vertices);
         String[] line = vertices.split(" ");
 
-        int out = Integer.parseInt(line[0]);
-        int in = Integer.parseInt(line[1]);
+        String out = line[0];
+        String in = line[1];
         double weight= Double.parseDouble(line[2]);
         getOrCreate(in, out); //Create vertex if not exists.
 
@@ -86,9 +86,9 @@ public class Graph {
 
     }
 
-    private void getOrCreate(int in, int out) throws Exception {
+    private void getOrCreate(String in, String out) throws Exception {
 
-        if (in != out) {
+        if (!in.equals(out)) {
 
             if (!this.graph.containsKey(out)) {
                 createVertex(out);
@@ -169,10 +169,10 @@ public class Graph {
 
         String result = "";
 
-        int[] vertices = getVerticesAsOrderedArray();
+        String[] vertices = getVerticesAsOrderedArray();
 
-        ArrayList<Integer> edges;
-        for (int vertex : vertices) {
+        ArrayList<String> edges;
+        for (String vertex : vertices) {
             result += vertex + " - ";
             edges = new ArrayList<>();
             for (Edge edge : graph.get(vertex)) {
@@ -194,15 +194,15 @@ public class Graph {
     }
 
     protected String AMrepresentation() {
-        int[][] matrix = new int[this.getVertexNumber()][this.getVertexNumber()];
+        double[][] matrix = new double[this.getVertexNumber()][this.getVertexNumber()];
 
-        int[] lines = getVerticesAsOrderedArray();
-        int[] columns = getVerticesAsOrderedArray();
+        String[] lines = getVerticesAsOrderedArray();
+        String[] columns = getVerticesAsOrderedArray();
 
         String li = " ";
 
         for (int k = 0; k < lines.length; k++) {
-            li += "   " + lines[k];
+            li += "     " + lines[k];
         }
 
         String output = li + System.getProperty("line.separator");
@@ -211,7 +211,7 @@ public class Graph {
             for (int col = 0; col < lines.length; col++) {
                 for (Edge edge : graph.get(lines[line])) {
                     if (edge.isConnected(lines[col])) {
-                        matrix[line][col]++;
+                        matrix[line][col] = edge.getWeight();
                     }
                 }
             }
@@ -229,15 +229,34 @@ public class Graph {
         return output;
     }
 
-    private int[] getVerticesAsOrderedArray() {
-        ArrayList<Integer> vertices = new ArrayList<>();
+    private double[][] getGraphAsArray() {
+        double[][] matrix = new double[this.getVertexNumber()][this.getVertexNumber()];
 
-        for (Integer v: graph.keySet()) {
+        String[] lines = getVerticesAsOrderedArray();
+        String[] columns = getVerticesAsOrderedArray();
+
+        for (int line = 0; line < lines.length; line++) {
+            for (int col = 0; col < lines.length; col++) {
+                for (Edge edge : graph.get(lines[line])) {
+                    if (edge.isConnected(lines[col])) {
+                        matrix[line][col] = edge.getWeight();
+                    }
+                }
+            }
+        }
+
+        return matrix;
+    }
+
+    private String[] getVerticesAsOrderedArray() {
+        ArrayList<String> vertices = new ArrayList<>();
+
+        for (String v: graph.keySet()) {
             vertices.add(v);
         }
         Collections.sort(vertices);
 
-        int[] output = new int[vertices.size()];
+        String[] output = new String[vertices.size()];
         for (int i = 0; i < output.length; i++) {
             output[i] = vertices.get(i);
         }

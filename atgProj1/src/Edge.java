@@ -1,26 +1,26 @@
 
 public class Edge implements Comparable<Edge> {
 
-    private int v1;
-    private int v2;
+    private String v1;
+    private String v2;
     private double weight;
     private static final double DEFAULT_WEIGHT = 1.0;
 
-    public Edge (int v1, int v2, double weight) {
+    public Edge (String v1, String v2, double weight) {
         this.v1 = v1;
         this.v2 = v2;
         this.weight = weight;
     }
 
-    public Edge (int v1, int v2) {
+    public Edge (String v1, String v2) {
         this(v1,v2, DEFAULT_WEIGHT);
     }
 
-    public int getV1() {
+    public String getV1() {
         return v1;
     }
 
-    public int getV2() {
+    public String getV2() {
         return v2;
     }
 
@@ -38,9 +38,8 @@ public class Edge implements Comparable<Edge> {
 
     	Edge edge = (Edge) o;
 
-        if ((edge.getV1() == this.getV1() && edge.getV2() == this.getV2()) ||
-                (edge.getV1() == this.getV2() && edge.getV2() == this.getV1())) {
-
+        if (edge.getV1().equals(this.getV1()) && edge.getV2().equals(this.getV2()) ||
+            (edge.getV1().equals(this.getV2()) && edge.getV2().equals(this.getV1()))){
             return true;
         }
 
@@ -49,15 +48,11 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public int compareTo(Edge edge) {
-        if (this.v1 < edge.getV1()) {
-            return -1;
-        } else if (this.v1 > edge.getV1()) {
-            return 1;
-        }
-        return 0;
+       return this.v1.compareTo(edge.getV1());
+
     }
 
-    public boolean isConnected(int vertex) {
-        return vertex == v2;
+    public boolean isConnected(String vertex) {
+        return vertex.equals(v2);
     }
 }
