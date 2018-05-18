@@ -77,7 +77,7 @@ public class ControllerTest {
     }
 
 
-    /*
+
     @Test
     public void testConnection() {
         controller = new Controller();
@@ -97,7 +97,7 @@ public class ControllerTest {
         }
         Assert.assertFalse(controller.connected(controller.getGraph()));
 
-    } */
+    }
 
 
 

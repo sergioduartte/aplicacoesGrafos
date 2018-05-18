@@ -108,22 +108,29 @@ public class Graph {
             createVertex(out);
         }
 	}
-    
-    public HashSet getEdges(int vertex) throws Exception {
-    	if (!this.graph.containsKey(vertex))
-         	throw new Exception("Vertex not found.");
-    	return this.graph.get(vertex);
-    }
 
     /**
      * Check if graph is connected;
+     *
      * @return True if is connected, false otherwise.
      */
     public boolean connected() {
-        final boolean[] connected = new boolean[1];
-        connected[0] = true;
-        graph.forEach((key, value) -> connected[0] = connected[0] && !(value.size() == 0) );
-        return connected[0];
+        String[] vertices = getVerticesAsOrderedArray();
+        ArrayList<String> queue = new ArrayList<>();
+        ArrayList<String> visited = new ArrayList<>();
+
+        queue.add(vertices[0]);
+
+        while (queue.size() != 0) {
+            String vertex = queue.get(0);
+            if (!visited.contains(vertex)) {
+                visited.add(vertex);
+                queue.addAll(getNeighbors(vertex));
+            }
+            queue.remove(0);
+        }
+
+        return vertices.length == visited.size();
     }
 
 	/**
@@ -274,5 +281,13 @@ public class Graph {
     public String shortestPath(int v1, int v2) {
         //TODO
         return "";
+    }
+
+    public HashSet<String> getNeighbors(String vertex) {
+        HashSet<String> neighbors = new HashSet<>();
+        for (Edge edge : graph.get(vertex)) {
+            neighbors.add(edge.getV2());
+        }
+        return neighbors;
     }
 }
