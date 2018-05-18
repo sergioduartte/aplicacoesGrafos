@@ -35,7 +35,7 @@ public class ControllerTest {
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
-            Assert.fail();
+            e.printStackTrace();
         }
     }
 
@@ -60,7 +60,7 @@ public class ControllerTest {
         try {
             controller.readGraph(path1);
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail();
         }
     }
 
@@ -125,10 +125,14 @@ public class ControllerTest {
 
 
         try {
-            Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
-            Assert.fail();
+            System.out.println(e.getMessage());
+        }
+        try {
+            Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -156,10 +160,15 @@ public class ControllerTest {
 
 
         try {
-            Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
-            Assert.fail();
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

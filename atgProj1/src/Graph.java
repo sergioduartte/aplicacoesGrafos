@@ -5,11 +5,14 @@ public class Graph {
     private HashMap<String, HashSet<Edge>> graph;
     private final int qtVertices;
     private HashMap<Integer, Boolean> visited;
+    private boolean weighted;
+
 
     public Graph (int vertices) {
         this.graph = new HashMap<>();
         this.visited = new HashMap<>();
-        qtVertices = vertices;
+        this.qtVertices = vertices;
+        this.weighted = false;
     }
 
     public void createVertex(String vertex) throws Exception {
@@ -64,6 +67,8 @@ public class Graph {
 
         Validator.validateCommands(vertices);
         String[] line = vertices.split(" ");
+
+        this.weighted = true;
 
         String out = line[0];
         String in = line[1];
@@ -176,10 +181,16 @@ public class Graph {
             result += vertex + " - ";
             edges = new ArrayList<>();
             for (Edge edge : graph.get(vertex)) {
-                if (!edges.contains(edge)){
-                    edges.add(edge.getV2());
+                if (!edges.contains(edge)) {
+                    if (!weighted) {
+                        edges.add(edge.getV2());
+                    }
+                    else {
+                        edges.add(edge.getV2() + "(" + ((int) edge.getWeight() == edge.getWeight() ? String.valueOf((int) edge.getWeight()) : String.valueOf(edge.getWeight()))+ ")");
+                    }
                 }
             }
+
             Collections.sort(edges);
 
             for (int i = 0; i < edges.size(); i++) {
@@ -194,39 +205,23 @@ public class Graph {
     }
 
     protected String AMrepresentation() {
-        double[][] matrix = new double[this.getVertexNumber()][this.getVertexNumber()];
+        double[][] matrix = getGraphAsArray();
 
-        String[] lines = getVerticesAsOrderedArray();
-        String[] columns = getVerticesAsOrderedArray();
+        String[] vertices = getVerticesAsOrderedArray();
 
         String li = " ";
 
-        for (int k = 0; k < lines.length; k++) {
-            li += "     " + lines[k];
+        for (int k = 0; k < vertices.length; k++) {
+            li += "   " + vertices[k];
         }
 
         String output = li + System.getProperty("line.separator");
 
-        for (int line = 0; line < lines.length; line++) {
-            for (int col = 0; col < lines.length; col++) {
-                for (Edge edge : graph.get(lines[line])) {
-                    if (edge.isConnected(lines[col])) {
-                        matrix[line][col] = edge.getWeight();
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < lines.length; i++) {
-            output += lines[i];
+        for (int i = 0; i < vertices.length; i++) {
+            output += vertices[i];
             for (int j = 0; j < matrix[i].length ; j++) {
                 output += "   ";
-//                output += (int) matrix[i][j] == matrix[i][j] ? (int) matrix[i][j] : matrix[i][j];
-                if ((int) matrix[i][j] == matrix[i][j]) {
-                    output +=  (int) matrix[i][j];
-                } else {
-                    output += matrix[i][j];
-                }
+                output += (int) matrix[i][j] == matrix[i][j] ? String.valueOf((int) matrix[i][j]) : matrix[i][j];
             }
             output += System.getProperty("line.separator");
         }
@@ -238,13 +233,12 @@ public class Graph {
     private double[][] getGraphAsArray() {
         double[][] matrix = new double[this.getVertexNumber()][this.getVertexNumber()];
 
-        String[] lines = getVerticesAsOrderedArray();
-        String[] columns = getVerticesAsOrderedArray();
+        String[] vertices = getVerticesAsOrderedArray();
 
-        for (int line = 0; line < lines.length; line++) {
-            for (int col = 0; col < lines.length; col++) {
-                for (Edge edge : graph.get(lines[line])) {
-                    if (edge.isConnected(lines[col])) {
+        for (int line = 0; line < vertices.length; line++) {
+            for (int col = 0; col < vertices.length; col++) {
+                for (Edge edge : graph.get(vertices[line])) {
+                    if (edge.isConnected(vertices[col])) {
                         matrix[line][col] = edge.getWeight();
                     }
                 }
