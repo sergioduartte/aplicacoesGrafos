@@ -161,6 +161,10 @@ public class Graph {
     }
 
 
+    /**
+     * Returns a list representation from the graph, on the format <vertex - list of edges>
+     * @return a String containing the representation.
+     */
     protected String ALrepresentation() {
 
         String result = "";
