@@ -38,7 +38,7 @@ public class Controller {
         // de vértices do grafo. Cada linha subsequente informa as arestas do mesmo.
         graph = new Graph(qVertices);
 
-        for (int i = 1; i <= qVertices; i++) {
+        for (int i = 1; i <= lines.size() - 1; i++) {
             graph.connectSimpleVertex(lines.get(i));
         }
     }
@@ -56,7 +56,7 @@ public class Controller {
         int qVertices = Integer.parseInt(lines.get(0));
 
         graph = new Graph(qVertices);
-        for (int i = 1; i <= qVertices; i++) {
+        for (int i = 1; i <= lines.size() - 1; i++) {
             graph.connectWeightedVertex(lines.get(i));
         }
     }

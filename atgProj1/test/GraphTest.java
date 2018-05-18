@@ -10,8 +10,8 @@ public class GraphTest {
     public void createVertex () {
 		Graph graph = new Graph(2);
 		try {
-			graph.createVertex(1);
-			graph.createVertex(1);
+			graph.createVertex("1");
+			graph.createVertex("1");
 		} catch (Exception e) {
 			String message = "Vertex already exists.";
 			Assert.assertEquals(true, e.getMessage().equals(message));
@@ -57,8 +57,8 @@ public class GraphTest {
     @Test
     public void connectSimpleVertex4 () {
     	Graph graph = new Graph(2);
-    	Edge edgeOut = new Edge(1,2);
-        Edge edgeIn = new Edge(2,1);
+    	Edge edgeOut = new Edge("1","2");
+        Edge edgeIn = new Edge("2","1");
     	try {
     		String vertices = "1 2";
     		graph.connectSimpleVertex(vertices);

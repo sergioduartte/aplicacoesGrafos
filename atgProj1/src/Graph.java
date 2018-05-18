@@ -220,7 +220,13 @@ public class Graph {
         for (int i = 0; i < lines.length; i++) {
             output += lines[i];
             for (int j = 0; j < matrix[i].length ; j++) {
-                output += "   " + matrix[i][j];
+                output += "   ";
+//                output += (int) matrix[i][j] == matrix[i][j] ? (int) matrix[i][j] : matrix[i][j];
+                if ((int) matrix[i][j] == matrix[i][j]) {
+                    output +=  (int) matrix[i][j];
+                } else {
+                    output += matrix[i][j];
+                }
             }
             output += System.getProperty("line.separator");
         }
