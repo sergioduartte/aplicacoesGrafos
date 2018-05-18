@@ -54,7 +54,7 @@ public class GraphTest {
 		}
     }
     
-    @Test
+    /*@Test
     public void connectSimpleVertex4 () {
     	Graph graph = new Graph(2);
     	Edge edgeOut = new Edge("1","2");
@@ -64,20 +64,20 @@ public class GraphTest {
     		graph.connectSimpleVertex(vertices);
     		HashSet<Edge> edgesOut = graph.getEdges(1);
     		HashSet<Edge> edgesIn = graph.getEdges(2);
-    		
+
     		for ( Iterator<Edge> i = edgesOut.iterator(); i.hasNext();) {
     			Edge e = i.next();
     			Assert.assertEquals(true, e.equals(edgeOut));
     		}
-    		
+
     		for ( Iterator<Edge> i = edgesIn.iterator(); i.hasNext();) {
     			Edge e = i.next();
     			Assert.assertEquals(true, e.equals(edgeIn));
     		}
 		} catch (Exception e) {
-			
+
 		}
-    }
+    }*/
     
 
 }
