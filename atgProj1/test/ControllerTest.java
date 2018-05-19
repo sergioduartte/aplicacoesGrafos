@@ -35,7 +35,7 @@ public class ControllerTest {
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
-            e.printStackTrace();
+            Assert.fail();
         }
     }
 
@@ -127,12 +127,12 @@ public class ControllerTest {
         try {
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
         try {
             Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
     }
 
@@ -162,13 +162,13 @@ public class ControllerTest {
         try {
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
 
         try {
             Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
     }
     
@@ -185,5 +185,21 @@ public class ControllerTest {
     	
         Assert.assertEquals(expectedShortes.equals(shortes), true);
 
+    }
+
+    @Test
+    public void testMST() {
+        try {
+            controller.readWeightedGraph(path3);
+        } catch (Exception e) {
+            Assert.fail();
+        }
+
+        String expected = "1 2 0.1" + System.getProperty("line.separator") +
+                "2 5 0.2" + System.getProperty("line.separator") +
+                "3 4 -9.5" + System.getProperty("line.separator") +
+                "4 5 2.3";
+
+        Assert.assertEquals(expected, controller.mst(controller.getGraph()));
     }
 }
