@@ -100,8 +100,8 @@ public class Controller {
         } else throw new Exception("Invalid representation.");
     }
 
-    public void BFS (Graph graph, String v) {
-        graph.BFS(v);
+    public String BFS (Graph graph, String v) {
+       return graph.BFS(v);
     }
 
     public String DFS (Graph graph, String v) throws Exception {

@@ -433,7 +433,7 @@ public class Graph {
         return result2.trim();
 
     }
-    public void BFS(String root) {
+    public String BFS(String root) {
         boolean visited[] = new boolean[getVertexNumber()];
 
         int level = 0;
@@ -463,9 +463,8 @@ public class Graph {
                 level++;
 
 
-            saida.add(new String[] {root, " "+ level,"" +dad});
+            saida.add(new String[] {root, "- "+ level,"" +dad});
 
-            // System.out.println(root+" "+level+" "+dad);
             dad = aux;
 
 
@@ -491,7 +490,7 @@ public class Graph {
             saida2 += System.getProperty("line.separator");
         }
 
-        System.out.println(saida2);
+        return saida2;
 
     }
 
