@@ -494,6 +494,14 @@ public class Graph {
 
     }
 
+    /**
+     *
+     * @param s The initial vertex.
+     * @param level The vertex's level.
+     * @param parent The vertex used to get to the vertex 's'.
+     * @return Result of the DFS in form of a HashMap, where the key will be a vertex and the value will be a String with the vertex's level and parent.
+     */
+
     public HashMap<String, String > DFS(String s, Integer level, String parent){
         String[] vertices = getVerticesAsOrderedArray();
         HashSet<String> edges = getNeighbors(s);

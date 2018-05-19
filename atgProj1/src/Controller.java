@@ -106,9 +106,9 @@ public class Controller {
 
     /**
      *
-     * @param graph The graph to be represented in a String.
-     * @param v the search's initial vertex
-     * @return String with the result for the DFS
+     * @param graph The graph where will be made the search.
+     * @param v the search's initial vertex.
+     * @return String with the result for the DFS.
      */
     public String DFS (Graph graph, String v){
         HashMap<String, String> graphDFS = graph.DFS(v, 0, "-");
