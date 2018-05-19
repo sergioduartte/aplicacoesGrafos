@@ -18,18 +18,18 @@ public class Graph {
     }
 
     public void createVertex(String vertex) throws Exception {
-    	if( graph.containsKey(vertex) )
-    		throw new Exception("Vertex already exists.");
-    	if( this.qtVertices == graph.size() ) {
-    	    throw new Exception("Vertex cannot be created. All the vertices already created");
+        if( graph.containsKey(vertex) )
+            throw new Exception("Vertex already exists.");
+        if( this.qtVertices == graph.size() ) {
+            throw new Exception("Vertex cannot be created. All the vertices already created");
         }
-    	HashSet<Edge> edges = new HashSet<>();
+        HashSet<Edge> edges = new HashSet<>();
         graph.put(vertex, edges);
 
     }
-    
+
     private boolean hasNegativeWeighted() {
-    	return this.hasNegativeWeighted;
+        return this.hasNegativeWeighted;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Graph {
         String in = line[1];
         double weight= Double.parseDouble(line[2]);
         if(weight < 0)
-        	this.hasNegativeWeighted = true;
+            this.hasNegativeWeighted = true;
         getOrCreate(in, out); //Create vertex if not exists.
 
 
@@ -114,7 +114,7 @@ public class Graph {
         if (!this.graph.containsKey(out)) {
             createVertex(out);
         }
-	}
+    }
 
     /**
      * Check if graph is connected;
@@ -140,7 +140,7 @@ public class Graph {
         return vertices.length == visited.size();
     }
 
-	/**
+    /**
      * The number of vertex
      * @return The number of vertex
      */
@@ -287,108 +287,108 @@ public class Graph {
     public boolean getVertexStatus(Integer v){
         return this.visited.containsKey(v) && this.visited.get(v);
     }
-    
+
     public String shortestPath(String v1, String v2) {
-    	if( hasNegativeWeighted())
-    		return floyd(v1,v2);
-    	else 
-    		return dijsktra(v1, v2);    		
-    } 
-        
+        if( hasNegativeWeighted())
+            return floyd(v1,v2);
+        else
+            return dijsktra(v1, v2);
+    }
+
     public String floyd(String v1, String v2) {
         double[][] dist = new double[this.getVertexNumber()][this.getVertexNumber()];
         String[][] next = new String[this.getVertexNumber()][this.getVertexNumber()];
-        
+
         // Fill each row with 1.0
         for (double[] row: dist)
             Arrays.fill(row, Double.POSITIVE_INFINITY);
-        
+
         // Fill each row with null
         for (String[] row: next)
             Arrays.fill(row, null);;
-        
-	    String[] vertices = getVerticesAsOrderedArray();
-	
-	    for (int line = 0; line < vertices.length; line++) {
-	        for (int col = 0; col < vertices.length; col++) {
-	        	dist[line][col] = this.getWeight(vertices[line], vertices[col]);
+
+        String[] vertices = getVerticesAsOrderedArray();
+
+        for (int line = 0; line < vertices.length; line++) {
+            for (int col = 0; col < vertices.length; col++) {
+                dist[line][col] = this.getWeight(vertices[line], vertices[col]);
                 next[line][col] = vertices[col];
-	        }
-	    }
-	    
-	    for (int k = 0; k < vertices.length; k++) {
-	        for (int i = 0; i < vertices.length; i++) {
-	        	for (int j = 0; j < vertices.length; j++) {
-		        	if( dist[i][j] > dist[i][k] + dist[k][j] ) {
-		        		dist[i][j] = dist[i][k] + dist[k][j];
-		        		next[i][j] = next[i][k];
-		        	}
-		        }	
-	        }
-	    }
-	    
-	    int u = java.util.Arrays.binarySearch(vertices, v1);
-	    int v = java.util.Arrays.binarySearch(vertices, v2);
-	    if ( next[u][v] == null)
-	    	return "";
-	    else {
-	    	ArrayList path = new ArrayList<String>();
-	    	path.add(vertices[u]);
-	    	while ( u != v) {
-	    		u = java.util.Arrays.binarySearch(vertices, next[u][v]);
-	    		path.add(vertices[u]);
-	    	}
-	    	
-	    	return path.toString()
-	    	        .replace(",", "")  //remove the commas
-	    	        .replace("[", "")  //remove the right bracket
-	    	        .replace("]", "")  //remove the left bracket
-	    	        .trim();           //remove trailing spaces from partially initialized arrays
-	    }        
+            }
+        }
+
+        for (int k = 0; k < vertices.length; k++) {
+            for (int i = 0; i < vertices.length; i++) {
+                for (int j = 0; j < vertices.length; j++) {
+                    if( dist[i][j] > dist[i][k] + dist[k][j] ) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                        next[i][j] = next[i][k];
+                    }
+                }
+            }
+        }
+
+        int u = java.util.Arrays.binarySearch(vertices, v1);
+        int v = java.util.Arrays.binarySearch(vertices, v2);
+        if ( next[u][v] == null)
+            return "";
+        else {
+            ArrayList path = new ArrayList<String>();
+            path.add(vertices[u]);
+            while ( u != v) {
+                u = java.util.Arrays.binarySearch(vertices, next[u][v]);
+                path.add(vertices[u]);
+            }
+
+            return path.toString()
+                    .replace(",", "")  //remove the commas
+                    .replace("[", "")  //remove the right bracket
+                    .replace("]", "")  //remove the left bracket
+                    .trim();           //remove trailing spaces from partially initialized arrays
+        }
     }
-    
+
 
     public String dijsktra(String v1, String v2) {
         ArrayList listVertex = new ArrayList<String>();
         auxDijsktra(v1, v2, 0.0, listVertex);
-        
+
         return listVertex.toString()
-        .replace(",", "")  //remove the commas
-        .replace("[", "")  //remove the right bracket
-        .replace("]", "")  //remove the left bracket
-        .trim();           //remove trailing spaces from partially initialized arrays
-        
+                .replace(",", "")  //remove the commas
+                .replace("[", "")  //remove the right bracket
+                .replace("]", "")  //remove the left bracket
+                .trim();           //remove trailing spaces from partially initialized arrays
+
     }
-    
+
     private void auxDijsktra(String v1, String vf, Double x, ArrayList listVertex) {
-    	if(v1.equals(vf))
-    		listVertex.add(v1);
-    	else {
-    		listVertex.add(v1);
-    		HashSet<String> neighbors = getNeighbors(v1);
-    		Double lowerWeight = Double.POSITIVE_INFINITY;
-    		String vertexLower = v1;
-    		for (String neighbor : neighbors) {
-    			boolean condition1 = getWeight(v1, neighbor) < lowerWeight + x;
-    			boolean condition2 = ! listVertex.contains(neighbor);
-				if( condition1 && condition2) {
-					lowerWeight = getWeight(v1, neighbor);
-					vertexLower = neighbor;
-				}	
-			}
-    		auxDijsktra(vertexLower, vf, lowerWeight + x, listVertex);
-    	}
+        if(v1.equals(vf))
+            listVertex.add(v1);
+        else {
+            listVertex.add(v1);
+            HashSet<String> neighbors = getNeighbors(v1);
+            Double lowerWeight = Double.POSITIVE_INFINITY;
+            String vertexLower = v1;
+            for (String neighbor : neighbors) {
+                boolean condition1 = getWeight(v1, neighbor) < lowerWeight + x;
+                boolean condition2 = ! listVertex.contains(neighbor);
+                if( condition1 && condition2) {
+                    lowerWeight = getWeight(v1, neighbor);
+                    vertexLower = neighbor;
+                }
+            }
+            auxDijsktra(vertexLower, vf, lowerWeight + x, listVertex);
+        }
     }
-    
+
     private Double getWeight(String v1, String v2) {
-    	if (v1.equals(v2))
-    		return 0.0;
-    	HashSet<Edge> edges = this.graph.get(v1);
-    	for (Edge edge : edges) {
-			if(edge.getV2().equals(v2))
-				return edge.getWeight();
-		}
-    	return Double.POSITIVE_INFINITY;
+        if (v1.equals(v2))
+            return 0.0;
+        HashSet<Edge> edges = this.graph.get(v1);
+        for (Edge edge : edges) {
+            if(edge.getV2().equals(v2))
+                return edge.getWeight();
+        }
+        return Double.POSITIVE_INFINITY;
     }
 
     public HashSet<String> getNeighbors(String vertex) {
@@ -426,37 +426,45 @@ public class Graph {
         }
 
         return result2.trim();
-    
-    public void BFS(String s) {
+
+    }
+    public void BFS(String root) {
         boolean visited[] = new boolean[getVertexNumber()];
-       
+
         int level = 0;
         String dad = "-";
         String[] vertices = getVerticesAsOrderedArray();
 
         ArrayList<String> output = new ArrayList<>();
         ArrayList<ArrayList<String>>  listOut = new ArrayList<>();
- 
+
         // Create a queue for BFS
         LinkedList<String> queue = new LinkedList<String>();
-        
-        // Mark the current node as visited and enqueue it
-        visited[java.util.Arrays.binarySearch(vertices, s)]=true;
-        
-        queue.add(s);
- 
-        while (queue.size() != 0){        	 
-            // Dequeue a vertex from queue and print it
-        	String aux = s;
-            s = queue.poll();
-            if( queue.size() == 1)
-            	level++;
 
-            System.out.println(s+" "+level+" "+dad);
+        // Mark the current node as visited and enqueue it
+        visited[java.util.Arrays.binarySearch(vertices, root)]=true;
+
+        queue.add(root);
+
+
+        ArrayList<String[]> saida = new ArrayList<>();
+
+
+        while (queue.size() != 0){
+            // Dequeue a vertex from queue and print it
+            String aux = root;
+            root = queue.poll();
+            if( queue.size() == 1)
+                level++;
+
+
+            saida.add(new String[] {root, " "+ level,"" +dad});
+
+            // System.out.println(root+" "+level+" "+dad);
             dad = aux;
-            
-            
-            Iterator<String> i = getNeighbors(s).iterator();
+
+
+            Iterator<String> i = getNeighbors(root).iterator();
             while (i.hasNext()){
                 String n = i.next();
                 if (!visited[java.util.Arrays.binarySearch(vertices, n)]){
@@ -467,5 +475,20 @@ public class Graph {
 
         }
 
+        Collections.sort(saida, Comparator.comparing(o -> o[0]));
+
+        String saida2 = "";
+
+        for (int i = 0; i < saida.size() ; i++) {
+            saida2 += saida.get(i)[0] +" ";
+            saida2 += saida.get(i)[1] +" ";
+            saida2 += saida.get(i)[2] +" ";
+            saida2 += System.getProperty("line.separator");
+        }
+
+        System.out.println(saida2);
+
     }
+
+
 }

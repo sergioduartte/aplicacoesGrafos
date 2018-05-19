@@ -241,8 +241,9 @@ public class ControllerTest {
         } catch (Exception e) {
             Assert.assertEquals("Graph is not connected. Can't do MST.", e.getMessage());
         }
+    }
 
-    	  @Test
+    @Test
     public void testBFS() {
       try {
             controller.readWeightedGraph(path3);
@@ -251,7 +252,7 @@ public class ControllerTest {
         }
     	controller.BFS(controller.getGraph(), "1");
     	
-        Assert.assertEquals(true, true);
+        // Assert.assertEquals(true, true);
 
 
     }
