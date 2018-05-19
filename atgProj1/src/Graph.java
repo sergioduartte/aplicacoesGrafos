@@ -8,8 +8,10 @@ public class Graph {
     private boolean weighted;
     private boolean hasNegativeWeighted;
     private HashMap<String, String> resultDfs;
+    private HashMap<String, String> resultBfs;
 
     private HashMap<String, Boolean> visitedDFS;
+    private HashMap<String, Boolean> visitedBFS;
 
 
     public Graph (int vertices) {
@@ -20,6 +22,8 @@ public class Graph {
         this.weighted = false;
         this.hasNegativeWeighted = false;
         this.visitedDFS = new HashMap<>();
+        this.resultBfs = new HashMap<>();
+        this.visitedBFS = new HashMap<>();
     }
 
     public void createVertex(String vertex) throws Exception {
@@ -405,7 +409,7 @@ public class Graph {
     }
 
 
-    public String getMST() throws Exception {
+    public HashMap<String, String> getMST() throws Exception {
         if (!connected()) throw new Exception("Graph is not connected. Can't do MST.");
         ArrayList<Edge> result = new ArrayList<>();
         ArrayList<Edge> edges = getAllEdges();
@@ -422,13 +426,10 @@ public class Graph {
         }
 
         Collections.sort(result);
-
         Graph aux = new Graph(qtVertices);
         aux.addEdges(result);
 
-        String result2 = aux.BFS(aux.getFirstVertex());
-
-        return result2;
+        return aux.BFS(aux.getFirstVertex());
 
     }
 
@@ -441,67 +442,34 @@ public class Graph {
     protected String getFirstVertex() {
         return getVerticesAsOrderedArray()[0];
     }
-
-    public String BFS(String root) {
-        boolean visited[] = new boolean[getVertexNumber()];
-
-        int level = 0;
-        String dad = "-";
-        String[] vertices = getVerticesAsOrderedArray();
-
-        ArrayList<String> output = new ArrayList<>();
-        ArrayList<ArrayList<String>>  listOut = new ArrayList<>();
-
-        // Create a queue for BFS
-        LinkedList<String> queue = new LinkedList<String>();
-
-        // Mark the current node as visited and enqueue it
-        visited[java.util.Arrays.binarySearch(vertices, root)]=true;
-
+   
+    public HashMap<String, String > BFS(String root){
+        ArrayList<String> queue = new ArrayList<>();
+        HashMap<String, Integer> niveis = new HashMap<>();
+        Integer nivel = 0;
+        
+        resultBfs.put(root, " - 0 -"+ System.getProperty("line.separator"));
+        visitedBFS.put(root, true);
+        niveis.put(root, 0);
         queue.add(root);
-
-
-        ArrayList<String[]> saida = new ArrayList<>();
-
-
-        while (queue.size() != 0){
-            // Dequeue a vertex from queue and print it
-            String aux = root;
-            root = queue.poll();
-            if( queue.size() == 1)
-                level++;
-
-
-            saida.add(new String[] {root, "- "+ level,"" +dad});
-
-            dad = aux;
-
-
-            Iterator<String> i = getNeighbors(root).iterator();
-            while (i.hasNext()){
-                String n = i.next();
-                if (!visited[java.util.Arrays.binarySearch(vertices, n)]){
-                    visited[java.util.Arrays.binarySearch(vertices, n)] = true;
-                    queue.add(n);
+        while(queue.size() != 0){
+            String next = queue.get(0);
+            HashSet<String> edges = getNeighbors(next);
+            
+            for(String s: edges){
+                if(!visitedBFS.containsKey(s)){
+                    queue.add(s);
+                    niveis.put(s, niveis.get(next) + 1);
+                    resultBfs.put(s, " - " + niveis.get(s) + " " + next + System.getProperty("line.separator"));
+                    visitedBFS.put(s, true);
                 }
             }
-
+            
+            queue.remove(0);
         }
-
-        Collections.sort(saida, Comparator.comparing(o -> o[0]));
-
-        String saida2 = "";
-
-        for (int i = 0; i < saida.size() ; i++) {
-            saida2 += saida.get(i)[0];
-            saida2 +=  " " + saida.get(i)[1];
-            saida2 += " " + saida.get(i)[2];
-            saida2 += System.getProperty("line.separator");
-        }
-
-        return saida2.trim();
-
-    }
+        
+        return resultBfs;
+}
 
     /**
      *

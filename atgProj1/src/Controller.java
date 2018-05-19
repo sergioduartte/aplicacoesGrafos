@@ -111,7 +111,19 @@ public class Controller {
     }
 
     public String BFS (Graph graph, String v) {
-       return graph.BFS(v);
+       HashMap<String, String> graphBFS = graph.BFS(v);
+       String result = "";
+
+       Iterator it = graphBFS.entrySet().iterator();
+       while (it.hasNext()) {
+           Map.Entry pair = (Map.Entry)it.next();
+           result += pair.getKey() + "" + pair.getValue();
+           it.remove();
+       }
+
+       int truncateIndex = result.length();
+       truncateIndex = result.lastIndexOf('\n', truncateIndex - 1);
+       return result.substring(0, truncateIndex);
     }
 
     /**
@@ -132,8 +144,10 @@ public class Controller {
             result += pair.getKey() + "" + pair.getValue();
             it.remove();
         }
-
-        return result;
+        
+        int truncateIndex = result.length();
+        truncateIndex = result.lastIndexOf('\n', truncateIndex - 1);
+        return result.substring(0, truncateIndex);
     }
     
     public String shortestPath (String v1, String v2) {
@@ -141,7 +155,19 @@ public class Controller {
     }
 
     public String mst (Graph graph) throws Exception {
-        return graph.getMST();
+    	HashMap<String, String> graphMST = graph.getMST();
+        String result = "";
+
+        Iterator it = graphMST.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            result += pair.getKey() + "" + pair.getValue();
+            it.remove();
+        }
+        
+        int truncateIndex = result.length();
+        truncateIndex = result.lastIndexOf('\n', truncateIndex - 1);
+        return result.substring(0, truncateIndex);
     }
 
 }
