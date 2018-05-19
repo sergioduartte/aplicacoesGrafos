@@ -22,9 +22,9 @@ public class Controller {
     }
 
     /**
-     * Read and generate a graph with weighted edges, based on text file
+     * Read and generate a graph with weighted edges, based on text file.
      * @param path The path .txt to file
-     * @throws Exception cause of the problem
+     * @throws Exception cause of the problem.
      */
 
     public void readGraph (String path) throws Exception {
@@ -33,7 +33,7 @@ public class Controller {
 
         int qVertices = Integer.parseInt(lines.get(0));
 
-        //a primeira linha informa o número
+        // a primeira linha informa o número
         // de vértices do grafo. Cada linha subsequente informa as arestas do mesmo.
         graph = new Graph(qVertices);
 
@@ -71,17 +71,17 @@ public class Controller {
     }
 
     public int getEdgeNumber (Graph graph) {
-
+        
         return graph.getEdgeNumber();
     }
 
     public double getMeanEdge (Graph graph) {
-
+        
         return graph.getMeanEdge();
     }
 
     public boolean connected(Graph graph) {
-
+        
         return graph.connected();
     }
 
@@ -105,7 +105,9 @@ public class Controller {
     }
 
     /**
-     *
+     * String representation of DFS (Depth-First Search) Algorithm. 
+     * The algorithm visits all the vertices of the graph and shows its 
+     * connection levels in the order of discovery.
      * @param graph The graph where will be made the search.
      * @param v the search's initial vertex.
      * @return String with the result for the DFS.
