@@ -32,14 +32,14 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public boolean equals(Object o) {
-    	if (o == null || !(o instanceof Edge)) {
+        if (o == null || !(o instanceof Edge)) {
             return false;
         }
 
-    	Edge edge = (Edge) o;
+        Edge edge = (Edge) o;
 
         if (edge.getV1().equals(this.getV1()) && edge.getV2().equals(this.getV2()) ||
-            (edge.getV1().equals(this.getV2()) && edge.getV2().equals(this.getV1()))){
+                (edge.getV1().equals(this.getV2()) && edge.getV2().equals(this.getV1()))){
             return true;
         }
 
@@ -48,7 +48,7 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public int compareTo(Edge edge) {
-       return this.v1.compareTo(edge.getV1());
+        return this.v1.compareTo(edge.getV1());
 
     }
 

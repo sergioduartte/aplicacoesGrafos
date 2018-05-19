@@ -178,7 +178,6 @@ public class Graph {
                     aux.add(edge);
                 }
             }
-
         }
         return aux;
     }
@@ -256,6 +255,11 @@ public class Graph {
         return output;
     }
 
+
+    /**
+     * A array representation of the graph as array
+     * @return a matrix who represents the connections
+     */
     private double[][] getGraphAsArray() {
         double[][] matrix = new double[this.getVertexNumber()][this.getVertexNumber()];
 
@@ -304,6 +308,12 @@ public class Graph {
             return dijsktra(v1, v2);
     }
 
+    /**
+     * Returns a shortest path from v1 to v2. But consider the negative values of the edges.
+     * @param v1 Vertex 1
+     * @param v2 Vertex 2
+     * @return A string containing the representation
+     */
     public String floyd(String v1, String v2) {
         double[][] dist = new double[this.getVertexNumber()][this.getVertexNumber()];
         String[][] next = new String[this.getVertexNumber()][this.getVertexNumber()];
@@ -356,7 +366,12 @@ public class Graph {
         }
     }
 
-
+    /**
+     * Returns a shortest path from v1 to v2. But it's not applicable if you consider the negative values of the edges.
+     * @param v1 Vertex 1
+     * @param v2 Vertex 2
+     * @return A string containing the representation
+     */
     public String dijsktra(String v1, String v2) {
         ArrayList listVertex = new ArrayList<String>();
         auxDijsktra(v1, v2, 0.0, listVertex);
@@ -389,6 +404,12 @@ public class Graph {
         }
     }
 
+    /**
+     * Returns the weight of the edge between the vertices
+     * @param v1 Vertex 1
+     * @param v2 Vertex 2
+     * @return The weight
+     */
     private Double getWeight(String v1, String v2) {
         if (v1.equals(v2))
             return 0.0;
@@ -400,6 +421,11 @@ public class Graph {
         return Double.POSITIVE_INFINITY;
     }
 
+    /**
+     * Returns the neighbor of the vertex
+     * @param vertex the vertex who wants to know the connections
+     * @return a hashset containing the neighborhood.
+     */
     public HashSet<String> getNeighbors(String vertex) {
         HashSet<String> neighbors = new HashSet<>();
         for (Edge edge : graph.get(vertex)) {
@@ -433,21 +459,30 @@ public class Graph {
 
     }
 
+    /**
+     * Add edges to the graph
+     * @param edges edges who wants to add
+     * @throws Exception if the graph cannot add more edges
+     */
     private void addEdges(ArrayList<Edge> edges) throws Exception {
         for (Edge edge : edges) {
             connectWeightedVertex(edge.getV1() + " " + edge.getV2() + " " + edge.getWeight());
         }
     }
 
+    /**
+     * Returns the first Vertex of the graph (ordered first)
+     * @return a String representation of the vertex.
+     */
     protected String getFirstVertex() {
         return getVerticesAsOrderedArray()[0];
     }
-   
+
     public HashMap<String, String > BFS(String root){
         ArrayList<String> queue = new ArrayList<>();
         HashMap<String, Integer> niveis = new HashMap<>();
         Integer nivel = 0;
-        
+
         resultBfs.put(root, " - 0 -"+ System.getProperty("line.separator"));
         visitedBFS.put(root, true);
         niveis.put(root, 0);
@@ -455,7 +490,7 @@ public class Graph {
         while(queue.size() != 0){
             String next = queue.get(0);
             HashSet<String> edges = getNeighbors(next);
-            
+
             for(String s: edges){
                 if(!visitedBFS.containsKey(s)){
                     queue.add(s);
@@ -464,12 +499,11 @@ public class Graph {
                     visitedBFS.put(s, true);
                 }
             }
-            
+
             queue.remove(0);
         }
-        
         return resultBfs;
-}
+    }
 
     /**
      *
@@ -478,7 +512,6 @@ public class Graph {
      * @param parent The vertex used to get to the vertex 's'.
      * @return Result of the DFS in form of a HashMap, where the key will be a vertex and the value will be a String with the vertex's level and parent.
      */
-
     public HashMap<String, String > DFS(String s, Integer level, String parent){
         String[] vertices = getVerticesAsOrderedArray();
         HashSet<String> edges = getNeighbors(s);
@@ -493,7 +526,6 @@ public class Graph {
                 DFS(e, level + 1, s);
             }
         }
-
         return resultDfs;
     }
 

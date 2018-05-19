@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class GraphTest {
-	
-	
+
+
 	@Test
-    public void createVertex () {
+	public void createVertex () {
 		Graph graph = new Graph(2);
 		try {
 			graph.createVertex("1");
@@ -16,43 +16,43 @@ public class GraphTest {
 			String message = "Vertex already exists.";
 			Assert.assertEquals(true, e.getMessage().equals(message));
 		}
-    }
-	
-    @Test
-    public void connectSimpleVertex1 () {
-    	Graph graph = new Graph(2);
-    	try {
-    		String vertices = "a b c";
-    		graph.connectSimpleVertex(vertices);
+	}
+
+	@Test
+	public void connectSimpleVertex1 () {
+		Graph graph = new Graph(2);
+		try {
+			String vertices = "a b c";
+			graph.connectSimpleVertex(vertices);
 		} catch (Exception e) {
 			String message = "Cannot parse args. Connection dont created.";
 			Assert.assertEquals(true, e.getMessage().equals(message));
 		}
-    }
-    
-    @Test
-    public void connectSimpleVertex2 () {
-    	Graph graph = new Graph(2);
-    	try {
-    		String vertices = "1 2 3 4";
-    		graph.connectSimpleVertex(vertices);
+	}
+
+	@Test
+	public void connectSimpleVertex2 () {
+		Graph graph = new Graph(2);
+		try {
+			String vertices = "1 2 3 4";
+			graph.connectSimpleVertex(vertices);
 		} catch (Exception e) {
 			String message = "Cannot create a connection. Exceeding arguments";
 			Assert.assertEquals(true, e.getMessage().equals(message));
 		}
-    }
-    
-    @Test
-    public void connectSimpleVertex3 () {
-    	Graph graph = new Graph(2);
-    	try {
-    		String vertices = "";
-    		graph.connectSimpleVertex(vertices);
+	}
+
+	@Test
+	public void connectSimpleVertex3 () {
+		Graph graph = new Graph(2);
+		try {
+			String vertices = "";
+			graph.connectSimpleVertex(vertices);
 		} catch (Exception e) {
 			String message = "Cannot create a connection. Missing arguments";
 			Assert.assertEquals(true, e.getMessage().equals(message));
 		}
-    }
+	}
     
     /*@Test
     public void connectSimpleVertex4 () {
@@ -78,6 +78,6 @@ public class GraphTest {
 
 		}
     }*/
-    
+
 
 }

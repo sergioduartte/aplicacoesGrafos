@@ -21,13 +21,11 @@ public class FReader {
 
         BufferedReader bReader = null;
 
-        // TODO arrumar as excecoes daqui depois...
         try {
             bReader = new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
 
         while (bReader.ready()) {
             String line = bReader.readLine();
