@@ -423,16 +423,25 @@ public class Graph {
 
         Collections.sort(result);
 
-        String result2 = "";
-        for (Edge edge : result) {
-            result2 += edge.getV1() + " " + edge.getV2() + " ";
-            result2 += ((int) edge.getWeight() == edge.getWeight() ? String.valueOf((int) edge.getWeight()) : String.valueOf(edge.getWeight()));
-            result2 += System.getProperty("line.separator");
-        }
+        Graph aux = new Graph(qtVertices);
+        aux.addEdges(result);
 
-        return result2.trim();
+        String result2 = aux.BFS(aux.getFirstVertex());
+
+        return result2;
 
     }
+
+    private void addEdges(ArrayList<Edge> edges) throws Exception {
+        for (Edge edge : edges) {
+            connectWeightedVertex(edge.getV1() + " " + edge.getV2() + " " + edge.getWeight());
+        }
+    }
+
+    protected String getFirstVertex() {
+        return getVerticesAsOrderedArray()[0];
+    }
+
     public String BFS(String root) {
         boolean visited[] = new boolean[getVertexNumber()];
 
@@ -484,13 +493,13 @@ public class Graph {
         String saida2 = "";
 
         for (int i = 0; i < saida.size() ; i++) {
-            saida2 += saida.get(i)[0] +" ";
-            saida2 += saida.get(i)[1] +" ";
-            saida2 += saida.get(i)[2] +" ";
+            saida2 += saida.get(i)[0];
+            saida2 +=  " " + saida.get(i)[1];
+            saida2 += " " + saida.get(i)[2];
             saida2 += System.getProperty("line.separator");
         }
 
-        return saida2;
+        return saida2.trim();
 
     }
 

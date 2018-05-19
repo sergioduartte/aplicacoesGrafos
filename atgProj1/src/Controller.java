@@ -60,6 +60,16 @@ public class Controller {
         }
     }
 
+    public Graph auxReadWeightedGraph (ArrayList<String> lines) throws Exception {
+        int qVertices = Integer.parseInt(lines.get(0));
+
+        Graph graph = new Graph(qVertices);
+        for (int i = 1; i <= lines.size() - 1; i++) {
+            graph.connectWeightedVertex(lines.get(i));
+        }
+        return graph;
+    }
+
     public Graph getGraph() {
 
         return graph;
