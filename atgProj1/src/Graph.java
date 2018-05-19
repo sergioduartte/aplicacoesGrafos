@@ -399,6 +399,7 @@ public class Graph {
         return neighbors;
     }
 
+
     public String getMST() throws Exception {
         if (!connected()) throw new Exception("Graph is not connected. Can't do MST.");
         ArrayList<Edge> result = new ArrayList<>();
@@ -425,5 +426,46 @@ public class Graph {
         }
 
         return result2.trim();
+    
+    public void BFS(String s) {
+        boolean visited[] = new boolean[getVertexNumber()];
+       
+        int level = 0;
+        String dad = "-";
+        String[] vertices = getVerticesAsOrderedArray();
+
+        ArrayList<String> output = new ArrayList<>();
+        ArrayList<ArrayList<String>>  listOut = new ArrayList<>();
+ 
+        // Create a queue for BFS
+        LinkedList<String> queue = new LinkedList<String>();
+        
+        // Mark the current node as visited and enqueue it
+        visited[java.util.Arrays.binarySearch(vertices, s)]=true;
+        
+        queue.add(s);
+ 
+        while (queue.size() != 0){        	 
+            // Dequeue a vertex from queue and print it
+        	String aux = s;
+            s = queue.poll();
+            if( queue.size() == 1)
+            	level++;
+
+            System.out.println(s+" "+level+" "+dad);
+            dad = aux;
+            
+            
+            Iterator<String> i = getNeighbors(s).iterator();
+            while (i.hasNext()){
+                String n = i.next();
+                if (!visited[java.util.Arrays.binarySearch(vertices, n)]){
+                    visited[java.util.Arrays.binarySearch(vertices, n)] = true;
+                    queue.add(n);
+                }
+            }
+
+        }
+
     }
 }

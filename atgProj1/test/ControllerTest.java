@@ -189,12 +189,12 @@ public class ControllerTest {
 
     @Test
     public void testMSTwithWeight() {
-        try {
+    	try {
             controller.readWeightedGraph(path3);
         } catch (Exception e) {
             Assert.fail();
         }
-
+        
         String expected = "1 2 0.1" + System.getProperty("line.separator") +
                 "2 5 0.2" + System.getProperty("line.separator") +
                 "3 4 -9.5" + System.getProperty("line.separator") +
@@ -241,5 +241,18 @@ public class ControllerTest {
         } catch (Exception e) {
             Assert.assertEquals("Graph is not connected. Can't do MST.", e.getMessage());
         }
+
+    	  @Test
+    public void testBFS() {
+      try {
+            controller.readWeightedGraph(path3);
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    	controller.BFS(controller.getGraph(), "1");
+    	
+        Assert.assertEquals(true, true);
+
+
     }
 }
