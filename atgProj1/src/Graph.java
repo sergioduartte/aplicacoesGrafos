@@ -6,6 +6,7 @@ public class Graph {
     private final int qtVertices;
     private HashMap<Integer, Boolean> visited;
     private boolean weighted;
+    private boolean hasNegativeWeighted;
 
 
     public Graph (int vertices) {
@@ -13,6 +14,7 @@ public class Graph {
         this.visited = new HashMap<>();
         this.qtVertices = vertices;
         this.weighted = false;
+        this.hasNegativeWeighted = false;
     }
 
     public void createVertex(String vertex) throws Exception {
@@ -25,7 +27,10 @@ public class Graph {
         graph.put(vertex, edges);
 
     }
-
+    
+    private boolean hasNegativeWeighted() {
+    	return this.hasNegativeWeighted;
+    }
 
     /**
      * Connect a new vertex, if the old vertex exists, add the edge from the new to the old vertex.
@@ -73,6 +78,8 @@ public class Graph {
         String out = line[0];
         String in = line[1];
         double weight= Double.parseDouble(line[2]);
+        if(weight < 0)
+        	this.hasNegativeWeighted = true;
         getOrCreate(in, out); //Create vertex if not exists.
 
 
@@ -277,8 +284,15 @@ public class Graph {
     public boolean getVertexStatus(Integer v){
         return this.visited.containsKey(v) && this.visited.get(v);
     }
-        
+    
     public String shortestPath(String v1, String v2) {
+    	if( hasNegativeWeighted())
+    		return floyd(v1,v2);
+    	else 
+    		return dijsktra(v1, v2);    		
+    } 
+        
+    public String floyd(String v1, String v2) {
         double[][] dist = new double[this.getVertexNumber()][this.getVertexNumber()];
         String[][] next = new String[this.getVertexNumber()][this.getVertexNumber()];
         
@@ -299,12 +313,12 @@ public class Graph {
 	        }
 	    }
 	    
-	    for (int k = 0; k < vertices.length - 1; k++) {
-	        for (int i = 0; i < vertices.length - 1; i++) {
-	        	for (int j = 0; j < vertices.length - 1; j++) {
+	    for (int k = 0; k < vertices.length; k++) {
+	        for (int i = 0; i < vertices.length; i++) {
+	        	for (int j = 0; j < vertices.length; j++) {
 		        	if( dist[i][j] > dist[i][k] + dist[k][j] ) {
 		        		dist[i][j] = dist[i][k] + dist[k][j];
-		        		next[i][j] = next[i][j];
+		        		next[i][j] = next[i][k];
 		        	}
 		        }	
 	        }
