@@ -104,7 +104,13 @@ public class Controller {
        return graph.BFS(v);
     }
 
-    public String DFS (Graph graph, String v) throws Exception {
+    /**
+     *
+     * @param graph The graph to be represented in a String.
+     * @param v the search's initial vertex
+     * @return String with the result for the DFS
+     */
+    public String DFS (Graph graph, String v){
         HashMap<String, String> graphDFS = graph.DFS(v, 0, "-");
         String result = "";
 
