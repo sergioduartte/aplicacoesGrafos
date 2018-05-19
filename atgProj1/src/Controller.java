@@ -108,6 +108,10 @@ public class Controller {
     public String DFS (Graph graph, int v) throws Exception {
         return "";
     }
+    
+    public String shortestPath (String v1, String v2) {
+        return graph.shortestPath(v1, v2);
+    }
 
     public String SCC (Graph graph) {
         return "";

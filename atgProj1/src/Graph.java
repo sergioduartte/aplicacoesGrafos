@@ -277,10 +277,101 @@ public class Graph {
     public boolean getVertexStatus(Integer v){
         return this.visited.containsKey(v) && this.visited.get(v);
     }
+        
+    public String shortestPath(String v1, String v2) {
+        double[][] dist = new double[this.getVertexNumber()][this.getVertexNumber()];
+        String[][] next = new String[this.getVertexNumber()][this.getVertexNumber()];
+        
+        // Fill each row with 1.0
+        for (double[] row: dist)
+            Arrays.fill(row, Double.POSITIVE_INFINITY);
+        
+        // Fill each row with null
+        for (String[] row: next)
+            Arrays.fill(row, null);;
+        
+	    String[] vertices = getVerticesAsOrderedArray();
+	
+	    for (int line = 0; line < vertices.length; line++) {
+	        for (int col = 0; col < vertices.length; col++) {
+	        	dist[line][col] = this.getWeight(vertices[line], vertices[col]);
+                next[line][col] = vertices[col];
+	        }
+	    }
+	    
+	    for (int k = 0; k < vertices.length - 1; k++) {
+	        for (int i = 0; i < vertices.length - 1; i++) {
+	        	for (int j = 0; j < vertices.length - 1; j++) {
+		        	if( dist[i][j] > dist[i][k] + dist[k][j] ) {
+		        		dist[i][j] = dist[i][k] + dist[k][j];
+		        		next[i][j] = next[i][j];
+		        	}
+		        }	
+	        }
+	    }
+	    
+	    int u = java.util.Arrays.binarySearch(vertices, v1);
+	    int v = java.util.Arrays.binarySearch(vertices, v2);
+	    if ( next[u][v] == null)
+	    	return "";
+	    else {
+	    	ArrayList path = new ArrayList<String>();
+	    	path.add(vertices[u]);
+	    	while ( u != v) {
+	    		u = java.util.Arrays.binarySearch(vertices, next[u][v]);
+	    		path.add(vertices[u]);
+	    	}
+	    	
+	    	return path.toString()
+	    	        .replace(",", "")  //remove the commas
+	    	        .replace("[", "")  //remove the right bracket
+	    	        .replace("]", "")  //remove the left bracket
+	    	        .trim();           //remove trailing spaces from partially initialized arrays
+	    }        
+    }
+    
 
-    public String shortestPath(int v1, int v2) {
-        //TODO
-        return "";
+    public String dijsktra(String v1, String v2) {
+        ArrayList listVertex = new ArrayList<String>();
+        auxDijsktra(v1, v2, 0.0, listVertex);
+        
+        return listVertex.toString()
+        .replace(",", "")  //remove the commas
+        .replace("[", "")  //remove the right bracket
+        .replace("]", "")  //remove the left bracket
+        .trim();           //remove trailing spaces from partially initialized arrays
+        
+    }
+    
+    private void auxDijsktra(String v1, String vf, Double x, ArrayList listVertex) {
+    	if(v1.equals(vf))
+    		listVertex.add(v1);
+    	else {
+    		listVertex.add(v1);
+    		HashSet<String> neighbors = getNeighbors(v1);
+    		Double lowerWeight = Double.POSITIVE_INFINITY;
+    		String vertexLower = v1;
+    		for (String neighbor : neighbors) {
+    			boolean condition1 = getWeight(v1, neighbor) < lowerWeight + x;
+    			boolean condition2 = ! listVertex.contains(neighbor);
+				if( condition1 && condition2) {
+					lowerWeight = getWeight(v1, neighbor);
+					vertexLower = neighbor;
+				}	
+			}
+    		auxDijsktra(vertexLower, vf, lowerWeight + x, listVertex);
+    	}
+    }
+    
+    private Double getWeight(String v1, String v2) {
+    	if (v1.equals(v2))
+    		return 0.0;
+    	HashSet<Edge> edges = this.graph.get(v1);
+    	for (Edge edge : edges) {
+			if(edge.getV2().equals(v2))
+				return edge.getWeight();
+		}
+    	return Double.POSITIVE_INFINITY;
     }
 
     public HashSet<String> getNeighbors(String vertex) {

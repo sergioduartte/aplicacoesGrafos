@@ -171,4 +171,19 @@ public class ControllerTest {
             System.out.println(e.getMessage());
         }
     }
+    
+    @Test
+    public void testShortestPath() {
+    	try {
+            controller.readWeightedGraph(path3);
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    	
+    	String shortes = controller.shortestPath("1", "5");
+    	String expectedShortes = "1 2 5";
+    	
+        Assert.assertEquals(expectedShortes.equals(shortes), true);
+
+    }
 }
