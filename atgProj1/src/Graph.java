@@ -7,14 +7,19 @@ public class Graph {
     private HashMap<Integer, Boolean> visited;
     private boolean weighted;
     private boolean hasNegativeWeighted;
+    private HashMap<String, String> resultDfs;
+
+    private HashMap<String, Boolean> visitedDFS;
 
 
     public Graph (int vertices) {
         this.graph = new HashMap<>();
         this.visited = new HashMap<>();
+        this.resultDfs = new HashMap<>();
         this.qtVertices = vertices;
         this.weighted = false;
         this.hasNegativeWeighted = false;
+        this.visitedDFS = new HashMap<>();
     }
 
     public void createVertex(String vertex) throws Exception {
@@ -487,6 +492,24 @@ public class Graph {
 
         return saida2;
 
+    }
+
+    public HashMap<String, String > DFS(String s, Integer level, String parent){
+        String[] vertices = getVerticesAsOrderedArray();
+        HashSet<String> edges = getNeighbors(s);
+
+        if(!visitedDFS.containsKey(s)){
+            resultDfs.put(s, " - " + level + " " + parent + System.getProperty("line.separator"));
+        }
+
+        visitedDFS.put(s, true);
+        for(String e: edges){
+            if(!visitedDFS.containsKey(e)){
+                DFS(e, level + 1, s);
+            }
+        }
+
+        return resultDfs;
     }
 
 

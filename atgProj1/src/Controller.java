@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author sergiosd
@@ -101,8 +104,18 @@ public class Controller {
        return graph.BFS(v);
     }
 
-    public String DFS (Graph graph, int v) throws Exception {
-        return "";
+    public String DFS (Graph graph, String v) throws Exception {
+        HashMap<String, String> graphDFS = graph.DFS(v, 0, "-");
+        String result = "";
+
+        Iterator it = graphDFS.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            result += pair.getKey() + "" + pair.getValue();
+            it.remove();
+        }
+
+        return result;
     }
     
     public String shortestPath (String v1, String v2) {
