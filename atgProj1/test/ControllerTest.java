@@ -35,7 +35,7 @@ public class ControllerTest {
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
-            e.printStackTrace();
+            Assert.fail();
         }
     }
 
@@ -127,12 +127,12 @@ public class ControllerTest {
         try {
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
         try {
             Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
     }
 
@@ -162,13 +162,13 @@ public class ControllerTest {
         try {
             Assert.assertEquals(expected, controller.graphRepresentation(controller.getGraph(), "AL"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
 
         try {
             Assert.assertEquals(expectedAM, controller.graphRepresentation(controller.getGraph(), "AM"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Assert.fail();
         }
     }
     
@@ -186,18 +186,73 @@ public class ControllerTest {
         Assert.assertEquals(expectedShortes.equals(shortes), true);
 
     }
-    
+
     @Test
-    public void testBFS() {
+    public void testMSTwithWeight() {
     	try {
             controller.readWeightedGraph(path3);
         } catch (Exception e) {
             Assert.fail();
         }
-    	
+        
+        String expected = "1 2 0.1" + System.getProperty("line.separator") +
+                "2 5 0.2" + System.getProperty("line.separator") +
+                "3 4 -9.5" + System.getProperty("line.separator") +
+                "4 5 2.3";
+
+        try {
+            Assert.assertEquals(expected, controller.mst(controller.getGraph()));
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void testMSTwithoutWeight() {
+        try {
+            controller.readGraph(path1);
+        } catch (Exception e) {
+            Assert.fail();
+        }
+
+        String expected = "1 2 1" + System.getProperty("line.separator") +
+                "1 5 1" + System.getProperty("line.separator") +
+                "3 5 1" + System.getProperty("line.separator") +
+                "4 5 1";
+
+        try {
+            Assert.assertEquals(expected, controller.mst(controller.getGraph()));
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void testMSTnotConnected() {
+        try {
+            controller.readGraph(path2);
+        } catch (Exception e) {
+            Assert.fail();
+        }
+
+        try {
+            controller.mst(controller.getGraph());
+            Assert.fail();
+        } catch (Exception e) {
+            Assert.assertEquals("Graph is not connected. Can't do MST.", e.getMessage());
+        }
+
+    	  @Test
+    public void testBFS() {
+      try {
+            controller.readWeightedGraph(path3);
+        } catch (Exception e) {
+            Assert.fail();
+        }
     	controller.BFS(controller.getGraph(), "1");
     	
         Assert.assertEquals(true, true);
+
 
     }
 }

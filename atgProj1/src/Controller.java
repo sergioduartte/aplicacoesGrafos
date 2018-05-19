@@ -1,8 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author sergiosd
@@ -113,12 +109,8 @@ public class Controller {
         return graph.shortestPath(v1, v2);
     }
 
-    public String SCC (Graph graph) {
-        return "";
-    }
-
-    public String mst (Graph graph) {
-        return "";
+    public String mst (Graph graph) throws Exception {
+        return graph.getMST();
     }
 
 }
