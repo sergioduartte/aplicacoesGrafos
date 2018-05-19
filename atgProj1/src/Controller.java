@@ -109,7 +109,7 @@ public class Controller {
         return graph.shortestPath(v1, v2);
     }
 
-    public String mst (Graph graph) {
+    public String mst (Graph graph) throws Exception {
         return graph.getMST();
     }
 

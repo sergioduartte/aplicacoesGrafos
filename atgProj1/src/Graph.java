@@ -399,28 +399,31 @@ public class Graph {
         return neighbors;
     }
 
-    public String getMST() {
-         ArrayList<Edge> result = new ArrayList<>();
-         ArrayList<Edge> edges = getAllEdges();
-         String[] vertices = getVerticesAsOrderedArray();
-         UnionFind uf = new UnionFind(vertices.length);
+    public String getMST() throws Exception {
+        if (!connected()) throw new Exception("Graph is not connected. Can't do MST.");
+        ArrayList<Edge> result = new ArrayList<>();
+        ArrayList<Edge> edges = getAllEdges();
+        String[] vertices = getVerticesAsOrderedArray();
+        UnionFind uf = new UnionFind(vertices.length);
 
-         Collections.sort(edges, Comparator.comparingDouble(Edge::getWeight));
+        Collections.sort(edges, Comparator.comparingDouble(Edge::getWeight));
 
-         for (Edge edge : edges) {
-             if (uf.find(Arrays.binarySearch(vertices, edge.getV1())) != uf.find(Arrays.binarySearch(vertices, edge.getV2()))) {
+        for (Edge edge : edges) {
+            if (uf.find(Arrays.binarySearch(vertices, edge.getV1())) != uf.find(Arrays.binarySearch(vertices, edge.getV2()))) {
                 result.add(edge);
                 uf.union(Arrays.binarySearch(vertices, edge.getV1()), Arrays.binarySearch(vertices, edge.getV2()));
-             }
-         }
+            }
+        }
 
-         Collections.sort(result);
+        Collections.sort(result);
 
-         String result2 = "";
-         for (Edge edge : result) {
-             result2 += edge.getV1() + " " + edge.getV2() + " " + edge.getWeight() + System.getProperty("line.separator");
-         }
+        String result2 = "";
+        for (Edge edge : result) {
+            result2 += edge.getV1() + " " + edge.getV2() + " ";
+            result2 += ((int) edge.getWeight() == edge.getWeight() ? String.valueOf((int) edge.getWeight()) : String.valueOf(edge.getWeight()));
+            result2 += System.getProperty("line.separator");
+        }
 
-         return result2.trim();
+        return result2.trim();
     }
 }
