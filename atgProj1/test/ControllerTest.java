@@ -186,4 +186,18 @@ public class ControllerTest {
         Assert.assertEquals(expectedShortes.equals(shortes), true);
 
     }
+    
+    @Test
+    public void testBFS() {
+    	try {
+            controller.readWeightedGraph(path3);
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    	
+    	controller.BFS(controller.getGraph(), "1");
+    	
+        Assert.assertEquals(true, true);
+
+    }
 }
