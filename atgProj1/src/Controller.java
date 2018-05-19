@@ -104,7 +104,7 @@ public class Controller {
         graph.BFS(v);
     }
 
-    public void DFS (Graph graph, String v) throws Exception {
+    public String DFS (Graph graph, String v) throws Exception {
         HashMap<String, String> graphDFS = graph.DFS(v, 0, "-");
         String result = "";
 
@@ -115,7 +115,7 @@ public class Controller {
             it.remove();
         }
 
-        System.out.print(result);
+        return result;
     }
     
     public String shortestPath (String v1, String v2) {
