@@ -141,9 +141,7 @@ public class Controller {
             it.remove();
         }
 
-        int truncateIndex = result.length();
-        truncateIndex = result.lastIndexOf('\n', truncateIndex - 1);
-        return result.substring(0, truncateIndex);
+        return result.trim();
     }
 
     /**
@@ -165,9 +163,7 @@ public class Controller {
             it.remove();
         }
 
-        int truncateIndex = result.length();
-        truncateIndex = result.lastIndexOf('\n', truncateIndex - 1);
-        return result.substring(0, truncateIndex);
+        return result.trim();
     }
 
     /**
@@ -197,9 +193,7 @@ public class Controller {
             it.remove();
         }
 
-        int truncateIndex = result.length();
-        truncateIndex = result.lastIndexOf('\n', truncateIndex - 1);
-        return result.substring(0, truncateIndex);
+        return result.trim();
     }
 
 }

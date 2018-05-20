@@ -163,7 +163,6 @@ public class Graph {
      */
     public int getEdgeNumber() {
         return countEdges();
-        // return getDoubledEdgeCount()/2;
     }
 
     private int countEdges() {
