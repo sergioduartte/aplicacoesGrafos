@@ -21,8 +21,8 @@ public class Validator {
         }
 
         try {
-            int connectionA = Integer.parseInt(line[0]);
-            int connectionB = Integer.parseInt(line[1]);
+            String connectionA = line[0];
+            String connectionB = line[1];
             if (line.length == 3) {
                 double weight = Double.parseDouble(line[2]);
             }
