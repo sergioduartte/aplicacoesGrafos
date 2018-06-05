@@ -7,6 +7,7 @@ public class TestGraph {
     Biblioteca gPonderado = new Biblioteca();
     Biblioteca grafoABC = new Biblioteca();
     Biblioteca gPonderadoABC = new Biblioteca();
+    Biblioteca grafoDesconectado = new Biblioteca();
 
     @Before
     public void init(){
@@ -14,6 +15,7 @@ public class TestGraph {
         gPonderado.readGraph("./src/grafoPonderado.txt");
         grafoABC.readGraph("./src/grafoABC.txt");
         gPonderadoABC.readGraph("./src/grafoPonderadoABC.txt");
+        grafoDesconectado.readGraph("./src/grafoDesconectado.txt");
     }
 
     @Test
@@ -220,6 +222,11 @@ public class TestGraph {
     @Test
     public void testConnectedABC() {
         Assert.assertTrue(grafoABC.connected(grafoABC.getGraph()));
+    }
+
+    @Test
+    public void testConnectedDisconnected() {
+        Assert.assertFalse(grafoDesconectado.connected(grafoDesconectado.getGraph()));
     }
 
 }
