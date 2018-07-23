@@ -25,3 +25,8 @@ hs_err_pid*
 
 # internal gitignore
 /.gitignore//
+
+/atgProj3/script/paradas
+/atgProj3/script/full-edges
+/atgProj3/script/full-nodes
+/atgProj3/script/rotas

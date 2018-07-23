@@ -9,7 +9,7 @@ for rota in $lista; do
   n_linhas=$(cat ./paradas/$rota | wc -l)
   rota=$(echo $rota | cut -d'.' -f1)
   yes "$rota" | head -n $n_linhas >> ./rota-ligada
-  yes Undirected | head -n $n_linhas >> ./tipo
+  yes Directed | head -n $n_linhas >> ./tipo
 done
 
 paste ./arestas1 ./arestas2 ./tipo ./rota-ligada >> full-edges

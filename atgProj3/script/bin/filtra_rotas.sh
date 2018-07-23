@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat ./grafo.csv | cut -d',' -f6-17 | tr ',' ' ' > ./rota.temp
+cat ./grafo.csv | cut -d',' -f5-17 | tr ',' ' ' > ./rota.temp
 
 # Remove Linhas vazias
 sed -i '/^\s*$/d' ./rota.temp
